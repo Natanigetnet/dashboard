@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Music Streaming Analytics Dashboard</title>
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.3.1/css/dataTables.dataTables.css" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+ 
+</head>
+<body style="background-color: cornsilk;">
+
+  <h1 style="text-align: center;">Music Streaming Service Analytics</h1>
+
+  <div class="container">
+    <div class="d-flex justify-content-center">
+      <div class="me-5" style="color: green;">
+        <div class="card" style="width: 18rem;">
+          <img src="https://th.bing.com/th/id/OIP.dvC4q9Y5qERrv1qlG_o0JgAAAA?cb=iwc2&rs=1&pid=ImgDetMain" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Subscribers</h5>
+            <a href="#" class="btn btn-primary" style="color: antiquewhite;">Want to join?</a>
+          </div>
+        </div>
+      </div>
+      <div class="me-5" style="background-color: green;">
+        <div class="card" style="width: 18rem;">
+          <img src="https://www.bing.com/th/id/OIP.c9uZjz02Q00mhGm6u0mHywHaEO?w=259&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Songs</h5>
+            <a href="#" class="btn btn-primary">More?</a>
+          </div>
+        </div>
+      </div>
+      <div class="me-5" style="color: green;">
+        <div class="card" style="width: 18rem;">
+          <img src="https://www.bing.com/th/id/OIP.1ok1_wNRYhV2xAdHTylEcAHaE7?w=281&h=211&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2" class="card-img-top" alt="...">
+          <div class="card-body">
+            <h5 class="card-title">Artists</h5>
+            <a href="#" class="btn btn-primary">Suggestions?</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container mt-5">
+    <div class="row">
+      <div class="col-md-6 mb-4">
+        <canvas id="streamsChart"></canvas>
+      </div>
+      <div class="col-md-6 mb-4">
+        <canvas id="subscribersChart"></canvas>
+      </div>
+      <div class="col-md-12" style="height: 1000px ;" >
+        <canvas id="genreChart"></canvas>
+      </div>
+      <div class="col-md-12" style="height: 1000px ;" >
+        <canvas id="GlobeChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div style="margin-top: 30px; max-width: 1200px; margin-left: auto; margin-right: auto;">
+    <h2>Top Tracks Performance</h2>
+    <table id="tracksTable" class="display">
+      <thead>
+        <tr>
+          <th>Rank</th>
+          <th>Track</th>
+          <th>Artist</th>
+          <th>Streams (M)</th>
+          <th>Daily Growth</th>
+          <th>Weeks on Chart</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Midnight Memories</td><td>The Luna Collective</td><td>245.6</td><td>+12.4%</td><td>15</td></tr>
+        <tr><td>2</td><td>Electric Dreams</td><td>Neon Wave</td><td>198.3</td><td>+8.7%</td><td>12</td></tr>
+        <tr><td>3</td><td>Golden Hour</td><td>Jade Williams</td><td>176.5</td><td>+5.2%</td><td>18</td></tr>
+        <tr><td>4</td><td>City Lights</td><td>Urban Beats</td><td>154.2</td><td>+3.9%</td><td>9</td></tr>
+        <tr><td>5</td><td>Ocean Eyes</td><td>Marina Blue</td><td>132.8</td><td>+7.1%</td><td>14</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- JS Libraries -->
+  <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+  <script src="https://cdn.datatables.net/2.3.1/js/dataTables.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Charts & Tables -->
+  <script>
+    new DataTable('#tracksTable', {
+      responsive: true
+    });
+
+    new Chart(document.getElementById('streamsChart'), {
+      type: 'bar',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Monthly Streams (Millions)',
+          data: [1250, 1430, 1680, 1920, 2150, 2480],
+          backgroundColor: 'rgba(52, 152, 219, 0.7)',
+          borderColor: 'rgba(52, 152, 219, 1)',
+          borderWidth: 1
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' },
+          title: { display: true, text: 'Monthly Stream Growth' }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            title: { display: true, text: 'Streams (Millions)' }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('subscribersChart'), {
+      type: 'line',
+      data: {
+        labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+        datasets: [{
+          label: 'Premium Subscribers (Thousands)',
+          data: [1250, 1350, 1420, 1530, 1650, 1780],
+          fill: false,
+          borderColor: 'rgb(46, 204, 113)',
+          tension: 0.3,
+          pointBackgroundColor: 'rgb(46, 204, 113)'
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'top' },
+          title: { display: true, text: 'Subscriber Growth' }
+        },
+        scales: {
+          y: {
+            beginAtZero: false,
+            title: { display: true, text: 'Subscribers (Thousands)' }
+          }
+        }
+      }
+    });
+
+    new Chart(document.getElementById('genreChart'), {
+      type: 'pie',
+      data: {
+        labels: ['Pop', 'Hip-Hop', 'Rock', 'Electronic', 'R&B', 'Other'],
+        datasets: [{
+          label: 'Stream Share',
+          data: [35, 25, 18, 12, 7, 3],
+          backgroundColor: [
+            'rgba(231, 76, 60, 0.7)',
+            'rgba(155, 89, 182, 0.7)',
+            'rgba(52, 152, 219, 0.7)',
+            'rgba(26, 188, 156, 0.7)',
+            'rgba(241, 196, 15, 0.7)',
+            'rgba(149, 165, 166, 0.7)'
+          ],
+          hoverOffset: 10
+        }]
+      },
+      options: {
+        responsive: true,
+        plugins: {
+          legend: { position: 'right' },
+          title: { display: true, text: 'Music Genre Distribution' }
+        }
+      }
+    });
+    new chart
+  </script>
+
+</body>
+</html>
